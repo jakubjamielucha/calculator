@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,
@@ -20,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
     String status = null;
     boolean operator = false;
+
+    DecimalFormat myFormatter = new DecimalFormat("#######.######");
+
+    String history, currentResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("0");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="0";
+                textViewHistory.setText(history);
             }
         });
 
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("1");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="1";
+                textViewHistory.setText(history);
             }
         });
 
@@ -66,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("2");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="2";
+                textViewHistory.setText(history);
             }
         });
 
@@ -73,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("3");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="3";
+                textViewHistory.setText(history);
             }
         });
 
@@ -80,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("4");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="4";
+                textViewHistory.setText(history);
             }
         });
 
@@ -87,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("5");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="5";
+                textViewHistory.setText(history);
             }
         });
 
@@ -94,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("6");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="6";
+                textViewHistory.setText(history);
             }
         });
 
@@ -101,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("7");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="7";
+                textViewHistory.setText(history);
             }
         });
 
@@ -108,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("8");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="8";
+                textViewHistory.setText(history);
             }
         });
 
@@ -115,6 +157,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 numberClick("9");
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                history+="9";
+                textViewHistory.setText(history);
             }
         });
 
@@ -122,6 +168,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                number = null;
+                status = null;
+                textViewResult.setText("0");
+                textViewHistory.setText("");
+                firstNumber = 0;
+                lastNumber = 0;
             }
         });
 
@@ -129,12 +181,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                number = number.substring(0,number.length()-1);
+                textViewResult.setText(number);
+                history = textViewHistory.getText().toString().substring(0,history.length()-1);
+                textViewHistory.setText(history);
+
             }
         });
 
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                textViewHistory.setText(history+"+");
+
                 if(operator){
                     if(status=="multiplication"){
                         multiply();
@@ -156,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                textViewHistory.setText(history+"-");
+
                 if(operator){
                     if(status=="multiplication"){
                         multiply();
@@ -177,6 +244,11 @@ public class MainActivity extends AppCompatActivity {
         btnMulti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                textViewHistory.setText(history+"x");
+
                 if(operator){
                     if(status=="subtraction"){
                         minus();
@@ -198,6 +270,10 @@ public class MainActivity extends AppCompatActivity {
         btnDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                textViewHistory.setText(history+"/");
 
                 if(operator){
                     if(status=="subtraction"){
@@ -221,6 +297,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(operator) {
+                    if (status == "subtraction") {
+                        minus();
+                    } else if (status == "multiplication") {
+                        multiply();
+                    } else if (status == "sum") {
+                        plus();
+                    } else if (status == "division"){
+                        divide();
+                    } else {
+                        firstNumber = Double.parseDouble(textViewResult.getText().toString());
+                    }
+                }
+                operator = false;
             }
         });
 
@@ -228,6 +318,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(number == null){
+                    number = "0.";
+                } else {
+                    number += ".";
+                }
+                textViewResult.setText(number);
             }
         });
     }
@@ -247,7 +343,8 @@ public class MainActivity extends AppCompatActivity {
     public void plus(){
         lastNumber = Double.parseDouble(textViewResult.getText().toString());
         firstNumber += lastNumber;
-        textViewResult.setText(""+firstNumber);
+
+        textViewResult.setText(myFormatter.format(firstNumber));
     }
 
     public void minus(){
@@ -259,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
             lastNumber = Double.parseDouble(textViewResult.getText().toString());
             firstNumber -= lastNumber;
         }
-        textViewResult.setText(""+firstNumber);
+        textViewResult.setText(myFormatter.format(firstNumber));
     }
 
     public void multiply(){
@@ -272,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
             lastNumber = Double.parseDouble(textViewResult.getText().toString());
             firstNumber *= lastNumber;
         }
-        textViewResult.setText(""+firstNumber);
+        textViewResult.setText(myFormatter.format(firstNumber));
     }
 
     public void divide(){
@@ -284,6 +381,6 @@ public class MainActivity extends AppCompatActivity {
             lastNumber = Double.parseDouble(textViewResult.getText().toString());
             firstNumber /= lastNumber;
         }
-        textViewResult.setText(""+firstNumber);
+        textViewResult.setText(myFormatter.format(firstNumber));
     }
 }
