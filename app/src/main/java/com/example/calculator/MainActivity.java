@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("0");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="0";
                 textViewHistory.setText(history);
             }
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("1");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="1";
                 textViewHistory.setText(history);
             }
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("2");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="2";
                 textViewHistory.setText(history);
             }
@@ -92,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("3");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="3";
                 textViewHistory.setText(history);
             }
@@ -103,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("4");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="4";
                 textViewHistory.setText(history);
             }
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("5");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="5";
                 textViewHistory.setText(history);
             }
@@ -125,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 numberClick("6");
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
                 history+="6";
                 textViewHistory.setText(history);
             }
@@ -194,9 +187,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
-                textViewHistory.setText(history+"+");
-
+                if(history.substring(history.length()-1).matches("[/x+-]")){
+                    textViewHistory.setText(history.substring(0,history.length()-1)+"+");
+                } else{
+                    history+="+";
+                    textViewHistory.setText(history);
+                }
                 if(operator){
                     if(status=="multiplication"){
                         multiply();
@@ -220,9 +216,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
-                textViewHistory.setText(history+"-");
-
+                if(history.substring(history.length()-1).matches("[/x+-]")){
+                    textViewHistory.setText(history.substring(0,history.length()-1)+"-");
+                } else{
+                    history+="-";
+                    textViewHistory.setText(history);
+                }
                 if(operator){
                     if(status=="multiplication"){
                         multiply();
@@ -246,8 +245,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
-                textViewHistory.setText(history+"x");
+                if(history.substring(history.length()-1).matches("[/x+-]")){
+                    textViewHistory.setText(history.substring(0,history.length()-1)+"x");
+                } else{
+                    history+="x";
+                    textViewHistory.setText(history);
+                }
 
                 if(operator){
                     if(status=="subtraction"){
@@ -272,8 +275,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 history = textViewHistory.getText().toString();
-                currentResult = textViewResult.getText().toString();
-                textViewHistory.setText(history+"/");
+                if(history.substring(history.length()-1).matches("[/x+-]")){
+                    textViewHistory.setText(history.substring(0,history.length()-1)+"/");
+                } else{
+                    history+="/";
+                    textViewHistory.setText(history);
+                }
 
                 if(operator){
                     if(status=="subtraction"){
@@ -282,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                         multiply();
                     } else if(status == "sum"){
                         plus();
-                    } else{
+                    } else {
                         divide();
                     }
                 }
@@ -335,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             number = number + view;
         }
-
         textViewResult.setText(number);
         operator = true;
     }
@@ -343,7 +349,6 @@ public class MainActivity extends AppCompatActivity {
     public void plus(){
         lastNumber = Double.parseDouble(textViewResult.getText().toString());
         firstNumber += lastNumber;
-
         textViewResult.setText(myFormatter.format(firstNumber));
     }
 
@@ -375,11 +380,11 @@ public class MainActivity extends AppCompatActivity {
     public void divide(){
         if(firstNumber == 0){
             lastNumber = Double.parseDouble(textViewResult.getText().toString());
-            firstNumber /= 1;
+            firstNumber = lastNumber;
         }
         else{
             lastNumber = Double.parseDouble(textViewResult.getText().toString());
-            firstNumber /= lastNumber;
+            firstNumber = firstNumber / lastNumber;
         }
         textViewResult.setText(myFormatter.format(firstNumber));
     }
